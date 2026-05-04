@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-container": "#e2e2e2",
+            "surface-container-high": "#e7e8e9",
+            "surface-dim": "#d9dadb",
+            "surface-variant": "#e1e3e4",
+            "surface-container-low": "#f3f4f5",
+            "secondary": "#5e5e5e",
+            "tertiary-container": "#6b7280",
+            "on-tertiary-fixed": "#151c27",
+            "surface-tint": "#0054d6",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#404754",
+            "on-error": "#ffffff",
+            "outline": "#727687",
+            "surface-container-highest": "#e1e3e4",
+            "background": "#f8f9fa",
+            "primary": "#0050cb",
+            "on-primary": "#ffffff",
+            "on-background": "#191c1d",
+            "tertiary-fixed": "#dce2f3",
+            "tertiary-fixed-dim": "#c0c7d6",
+            "inverse-on-surface": "#f0f1f2",
+            "primary-container": "#0066ff",
+            "inverse-surface": "#2e3132",
+            "primary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed-variant": "#003fa4",
+            "on-secondary-fixed": "#1b1b1b",
+            "error": "#ba1a1a",
+            "inverse-primary": "#b3c5ff",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#f8f7ff",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed-variant": "#474747",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#646464",
+            "on-primary-fixed": "#001849",
+            "on-surface": "#191c1d",
+            "tertiary": "#535a67",
+            "on-tertiary-container": "#f7f7ff",
+            "primary-fixed": "#dae1ff",
+            "surface": "#f8f9fa",
+            "secondary-fixed-dim": "#c6c6c6",
+            "surface-container": "#edeeef",
+            "on-tertiary": "#ffffff",
+            "outline-variant": "#c2c6d8",
+            "on-surface-variant": "#424656",
+            "secondary-fixed": "#e2e2e2",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "8px",
+            "container-max": "1280px",
+            "xxl": "48px",
+            "md": "16px",
+            "gutter": "24px",
+            "xs": "4px",
+            "lg": "24px",
+            "xl": "32px",
+            "base": "8px"
+          },
+          "fontFamily": {
+            "label-md": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "heading-lg": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "display-md": ["Manrope"],
+            "heading-xl": ["Manrope"],
+            "body-md": ["Manrope"],
+            "body-lg": ["Manrope"]
+          },
+          "fontSize": {
+            "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "heading-lg": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "display-md": ["36px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "heading-xl": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+  <style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen">
+  <!-- TopAppBar -->
+  <header
+    class="bg-white dark:bg-gray-950 docked full-width top-0 border-b border-gray-100 dark:border-gray-800 shadow-sm dark:shadow-none flex justify-between items-center w-full px-6 py-4 sticky z-40">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10">
+        <img alt="User profile photo" class="w-full h-full object-cover"
+          data-alt="A high-quality professional portrait of a modern user for a fintech application profile. The lighting is bright and clean with a soft bokeh background, reflecting a minimalist and corporate aesthetic. The overall color palette is dominated by neutral whites and soft greys, ensuring consistency with a premium financial dashboard style."
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhfl3C1z1iLti01uxpbpiJKHDqutpcDY8X19aS7a6LwOlYzHD0mnl3fIEwp5Ii2jCu0xN8HfR6U59DWhyf8Hujn83JDdP5aTq66VfR1how3Y-cpA_2UOLCh7mcbJIRTRYNUVu3gbTXskikuorj6LLlvgl6ijTV0ioHm-MqwLzb1Wg6ZZfEkK3lbjXT9vf79cdEhbQi9z_AIgnuYJgHyYd10iHUcxF4BJXI-MVOgAGWEkioA0pYoan2fcf8NRztlNDc5p9zSPKAufLa" />
+      </div>
+      <span
+        class="text-xl font-black text-gray-900 dark:text-gray-50 font-manrope antialiased tracking-tight">Subwise</span>
+    </div>
+    <button
+      class="hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors p-2 rounded-full active:opacity-80 transition-opacity">
+      <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">notifications</span>
+    </button>
+  </header>
+  <main class="max-w-container-max mx-auto px-6 py-8 pb-32">
+    <!-- Total Monthly Spend Section -->
+    <section class="mb-10">
+      <h2 class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-2">Total Monthly Spend</h2>
+      <div class="flex items-baseline gap-2">
+        <span class="font-display-lg text-display-lg text-on-background">$145.50</span>
+        <span
+          class="font-label-md text-label-md text-green-600 bg-green-50 px-2 py-1 rounded-lg flex items-center gap-1">
+          <span class="material-symbols-outlined text-[16px]">trending_down</span> 4.2%
+        </span>
+      </div>
+    </section>
+    <!-- Upcoming Renewals Section -->
+    <section class="mb-10">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-heading-xl text-heading-xl">Upcoming Renewals</h3>
+        <button class="font-label-md text-label-md text-primary">View Calendar</button>
+      </div>
+      <div class="flex overflow-x-auto gap-4 hide-scrollbar -mx-6 px-6 pb-4">
+        <!-- Netflix Card -->
+        <div
+          class="flex-shrink-0 w-64 bg-white p-lg rounded-xl border border-gray-100 shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.04)]">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-red-600"
+                style="font-variation-settings: 'FILL' 1;">movie</span>
+            </div>
+            <span class="font-label-sm text-label-sm bg-surface-container-low text-secondary px-3 py-1 rounded-full">In
+              2 days</span>
+          </div>
+          <div>
+            <p class="font-heading-lg text-heading-lg mb-1">Netflix</p>
+            <p class="font-body-sm text-body-sm text-secondary">Due May 24, 2024</p>
+            <p class="font-label-md text-label-md text-on-background mt-4">$15.99 <span
+                class="font-normal text-secondary">/mo</span></p>
+          </div>
+        </div>
+        <!-- Spotify Card -->
+        <div
+          class="flex-shrink-0 w-64 bg-white p-lg rounded-xl border border-gray-100 shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.04)]">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-green-600"
+                style="font-variation-settings: 'FILL' 1;">music_note</span>
+            </div>
+            <span class="font-label-sm text-label-sm bg-surface-container-low text-secondary px-3 py-1 rounded-full">In
+              5 days</span>
+          </div>
+          <div>
+            <p class="font-heading-lg text-heading-lg mb-1">Spotify</p>
+            <p class="font-body-sm text-body-sm text-secondary">Due May 27, 2024</p>
+            <p class="font-label-md text-label-md text-on-background mt-4">$10.99 <span
+                class="font-normal text-secondary">/mo</span></p>
+          </div>
+        </div>
+        <!-- Adobe Creative Cloud Placeholder -->
+        <div
+          class="flex-shrink-0 w-64 bg-white p-lg rounded-xl border border-gray-100 shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.04)] opacity-60">
+          <div class="flex justify-between items-start mb-6">
+            <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-purple-600"
+                style="font-variation-settings: 'FILL' 1;">palette</span>
+            </div>
+            <span class="font-label-sm text-label-sm bg-surface-container-low text-secondary px-3 py-1 rounded-full">In
+              12 days</span>
+          </div>
+          <div>
+            <p class="font-heading-lg text-heading-lg mb-1">Adobe CC</p>
+            <p class="font-body-sm text-body-sm text-secondary">Due June 03, 2024</p>
+            <p class="font-label-md text-label-md text-on-background mt-4">$54.99 <span
+                class="font-normal text-secondary">/mo</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Active Subscriptions Section -->
+    <section>
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="font-heading-xl text-heading-xl text-on-background">Active Subscriptions</h3>
+        <div class="flex gap-2">
+          <button class="p-2 rounded-lg bg-surface-container-low text-secondary border border-gray-200">
+            <span class="material-symbols-outlined text-[20px]">filter_list</span>
+          </button>
+          <button class="p-2 rounded-lg bg-surface-container-low text-secondary border border-gray-200">
+            <span class="material-symbols-outlined text-[20px]">sort</span>
+          </button>
+        </div>
+      </div>
+      <div class="space-y-3">
+        <!-- iCloud+ -->
+        <div
+          class="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
+              <span class="material-symbols-outlined text-blue-600">cloud</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-on-background">iCloud+</p>
+              <p class="font-body-sm text-body-sm text-secondary">Cloud Storage</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-label-md text-label-md text-on-background">$9.99</p>
+            <p class="font-label-sm text-label-sm text-secondary">Monthly</p>
+          </div>
+        </div>
+        <!-- GitHub Copilot -->
+        <div
+          class="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center">
+              <span class="material-symbols-outlined text-white">code</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-on-background">GitHub Copilot</p>
+              <p class="font-body-sm text-body-sm text-secondary">Development</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-label-md text-label-md text-on-background">$10.00</p>
+            <p class="font-label-sm text-label-sm text-secondary">Monthly</p>
+          </div>
+        </div>
+        <!-- WSJ -->
+        <div
+          class="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center border border-gray-200">
+              <span class="material-symbols-outlined text-gray-800">newspaper</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-on-background">WSJ</p>
+              <p class="font-body-sm text-body-sm text-secondary">News &amp; Media</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-label-md text-label-md text-on-background">$38.99</p>
+            <p class="font-label-sm text-label-sm text-secondary">Monthly</p>
+          </div>
+        </div>
+        <!-- Equinox -->
+        <div
+          class="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-black flex items-center justify-center">
+              <span class="material-symbols-outlined text-white">fitness_center</span>
+            </div>
+            <div>
+              <p class="font-label-md text-label-md text-on-background">Equinox</p>
+              <p class="font-body-sm text-body-sm text-secondary">Health &amp; Fitness</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-label-md text-label-md text-on-background">$275.00</p>
+            <p class="font-label-sm text-label-sm text-secondary">Monthly</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- FAB: Contextual to Home/Dashboard screen -->
+  <button
+    class="fixed bottom-24 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform duration-200 z-50">
+    <span class="material-symbols-outlined text-[28px]">add</span>
+  </button>
+  <!-- BottomNavBar -->
+  <nav
+    class="bg-white dark:bg-gray-950 docked full-width bottom-0 border-t border-gray-100 dark:border-gray-800 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.02)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe font-manrope text-[11px] font-medium">
+    <!-- Home (Active) -->
+    <a class="flex flex-col items-center justify-center text-blue-600 dark:text-blue-400 font-bold active:scale-90 transition-transform duration-200"
+      href="#">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+      <span>Home</span>
+    </a>
+    <!-- Analytics -->
+    <a class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 hover:text-blue-500 dark:hover:text-blue-300 active:scale-90 transition-transform duration-200"
+      href="#">
+      <span class="material-symbols-outlined">donut_large</span>
+      <span>Analytics</span>
+    </a>
+    <!-- My Subs -->
+    <a class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 hover:text-blue-500 dark:hover:text-blue-300 active:scale-90 transition-transform duration-200"
+      href="#">
+      <span class="material-symbols-outlined">subscriptions</span>
+      <span>My Subs</span>
+    </a>
+    <!-- Settings -->
+    <a class="flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 hover:text-blue-500 dark:hover:text-blue-300 active:scale-90 transition-transform duration-200"
+      href="#">
+      <span class="material-symbols-outlined">settings</span>
+      <span>Settings</span>
+    </a>
+  </nav>
+</body>
+
+</html>

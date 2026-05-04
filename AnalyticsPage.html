@@ -1,0 +1,340 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-container": "#e2e2e2",
+            "surface-container-high": "#e7e8e9",
+            "surface-dim": "#d9dadb",
+            "surface-variant": "#e1e3e4",
+            "surface-container-low": "#f3f4f5",
+            "secondary": "#5e5e5e",
+            "tertiary-container": "#6b7280",
+            "on-tertiary-fixed": "#151c27",
+            "surface-tint": "#0054d6",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#404754",
+            "on-error": "#ffffff",
+            "outline": "#727687",
+            "surface-container-highest": "#e1e3e4",
+            "background": "#f8f9fa",
+            "primary": "#0050cb",
+            "on-primary": "#ffffff",
+            "on-background": "#191c1d",
+            "tertiary-fixed": "#dce2f3",
+            "tertiary-fixed-dim": "#c0c7d6",
+            "inverse-on-surface": "#f0f1f2",
+            "primary-container": "#0066ff",
+            "inverse-surface": "#2e3132",
+            "primary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed-variant": "#003fa4",
+            "on-secondary-fixed": "#1b1b1b",
+            "error": "#ba1a1a",
+            "inverse-primary": "#b3c5ff",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#f8f7ff",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed-variant": "#474747",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#646464",
+            "on-primary-fixed": "#001849",
+            "on-surface": "#191c1d",
+            "tertiary": "#535a67",
+            "on-tertiary-container": "#f7f7ff",
+            "primary-fixed": "#dae1ff",
+            "surface": "#f8f9fa",
+            "secondary-fixed-dim": "#c6c6c6",
+            "surface-container": "#edeeef",
+            "on-tertiary": "#ffffff",
+            "outline-variant": "#c2c6d8",
+            "on-surface-variant": "#424656",
+            "secondary-fixed": "#e2e2e2",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "8px",
+            "container-max": "1280px",
+            "xxl": "48px",
+            "md": "16px",
+            "gutter": "24px",
+            "xs": "4px",
+            "lg": "24px",
+            "xl": "32px",
+            "base": "8px"
+          },
+          "fontFamily": {
+            "label-md": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "heading-lg": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "display-md": ["Manrope"],
+            "heading-xl": ["Manrope"],
+            "body-md": ["Manrope"],
+            "body-lg": ["Manrope"]
+          },
+          "fontSize": {
+            "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "heading-lg": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "display-md": ["36px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "heading-xl": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .donut-chart {
+      background: conic-gradient(#0050cb 0% 40%,
+          #5e5e5e 40% 65%,
+          #c6c6c6 65% 85%,
+          #e2e2e2 85% 100%);
+      border-radius: 50%;
+    }
+
+    .donut-hole {
+      background-color: white;
+      border-radius: 50%;
+    }
+  </style>
+  <style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+
+<body class="bg-surface text-on-surface font-body-md min-h-screen pb-32">
+  <header
+    class="bg-white dark:bg-gray-950 shadow-sm border-b border-gray-100 flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary">
+        <span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+      </div>
+      <h1 class="text-xl font-black text-gray-900 font-manrope antialiased tracking-tight">Subwise</h1>
+    </div>
+    <button
+      class="w-10 h-10 flex items-center justify-center text-gray-500 hover:bg-gray-50 transition-colors active:opacity-80">
+      <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+    </button>
+  </header>
+  <main class="max-w-container-max mx-auto px-lg py-xl space-y-xl">
+    <header class="flex flex-col gap-xs">
+      <h2 class="font-heading-xl text-heading-xl text-on-background">Spending Insights</h2>
+      <p class="font-body-md text-body-md text-secondary">A visual breakdown of your monthly commitments</p>
+    </header>
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+      <section
+        class="lg:col-span-7 bg-white p-lg rounded-xl shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.04)] border border-outline-variant flex flex-col items-center">
+        <div class="w-full flex justify-between items-center mb-xl">
+          <h3 class="font-heading-lg text-heading-lg">Monthly Distribution</h3>
+          <span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+        </div>
+        <div class="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+          <div class="donut-chart w-full h-full"></div>
+          <div class="donut-hole w-3/4 h-3/4 absolute flex flex-col items-center justify-center">
+            <span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Total Spent</span>
+            <span class="font-display-md text-display-md text-on-surface">$2,450</span>
+            <span class="font-label-md text-label-md text-primary mt-xs">+4.2% vs last mo.</span>
+          </div>
+        </div>
+        <div class="w-full mt-xl grid grid-cols-2 md:grid-cols-4 gap-md">
+          <div class="flex flex-col gap-xs">
+            <div class="flex items-center gap-xs">
+              <div class="w-3 h-3 rounded-full bg-primary"></div>
+              <span class="font-label-sm text-label-sm text-secondary">Streaming</span>
+            </div>
+            <span class="font-heading-lg text-heading-lg">40%</span>
+          </div>
+          <div class="flex flex-col gap-xs">
+            <div class="flex items-center gap-xs">
+              <div class="w-3 h-3 rounded-full bg-secondary"></div>
+              <span class="font-label-sm text-label-sm text-secondary">Gym</span>
+            </div>
+            <span class="font-heading-lg text-heading-lg">25%</span>
+          </div>
+          <div class="flex flex-col gap-xs">
+            <div class="flex items-center gap-xs">
+              <div class="w-3 h-3 rounded-full bg-secondary-fixed-dim"></div>
+              <span class="font-label-sm text-label-sm text-secondary">Software</span>
+            </div>
+            <span class="font-heading-lg text-heading-lg">20%</span>
+          </div>
+          <div class="flex flex-col gap-xs">
+            <div class="flex items-center gap-xs">
+              <div class="w-3 h-3 rounded-full bg-secondary-fixed"></div>
+              <span class="font-label-sm text-label-sm text-secondary">Others</span>
+            </div>
+            <span class="font-heading-lg text-heading-lg">15%</span>
+          </div>
+        </div>
+      </section>
+      <div class="lg:col-span-5 space-y-lg">
+        <section class="bg-primary-container p-lg rounded-xl text-on-primary-container shadow-lg">
+          <div class="flex items-center gap-md mb-md">
+            <span class="material-symbols-outlined" data-icon="lightbulb">lightbulb</span>
+            <h3 class="font-heading-lg text-heading-lg">Smart Alerts</h3>
+          </div>
+          <div class="space-y-md">
+            <div class="bg-white/10 p-md rounded-lg flex items-start gap-md">
+              <span class="material-symbols-outlined text-white" data-icon="warning">warning</span>
+              <div>
+                <p class="font-label-md text-label-md text-white">Price Increase Detected</p>
+                <p class="font-body-sm text-body-sm text-white/80">Netflix monthly plan is increasing by $2.00 next
+                  cycle.</p>
+              </div>
+            </div>
+            <div class="bg-white/10 p-md rounded-lg flex items-start gap-md">
+              <span class="material-symbols-outlined text-white" data-icon="savings">savings</span>
+              <div>
+                <p class="font-label-md text-label-md text-white">Potential Savings</p>
+                <p class="font-body-sm text-body-sm text-white/80">You have 3 music services. Consider consolidating to
+                  save $24/mo.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          class="bg-white p-lg rounded-xl shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.04)] border border-outline-variant">
+          <h3 class="font-heading-lg text-heading-lg mb-lg">Category Detail</h3>
+          <div class="space-y-sm">
+            <div
+              class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors rounded-lg group">
+              <div class="flex items-center gap-md">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-fixed-dim transition-colors">
+                  <span class="material-symbols-outlined text-on-surface-variant" data-icon="movie">movie</span>
+                </div>
+                <div>
+                  <p class="font-label-md text-label-md">Streaming</p>
+                  <p class="font-body-sm text-body-sm text-secondary">Netflix, HBO, Disney+</p>
+                </div>
+              </div>
+              <span class="font-label-md text-label-md">$980.00</span>
+            </div>
+            <div
+              class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors rounded-lg group">
+              <div class="flex items-center gap-md">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-fixed-dim transition-colors">
+                  <span class="material-symbols-outlined text-on-surface-variant"
+                    data-icon="fitness_center">fitness_center</span>
+                </div>
+                <div>
+                  <p class="font-label-md text-label-md">Gym</p>
+                  <p class="font-body-sm text-body-sm text-secondary">Equinox, Peloton</p>
+                </div>
+              </div>
+              <span class="font-label-md text-label-md">$612.50</span>
+            </div>
+            <div
+              class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors rounded-lg group">
+              <div class="flex items-center gap-md">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-fixed-dim transition-colors">
+                  <span class="material-symbols-outlined text-on-surface-variant" data-icon="code">code</span>
+                </div>
+                <div>
+                  <p class="font-label-md text-label-md">Software</p>
+                  <p class="font-body-sm text-body-sm text-secondary">Adobe, GitHub, ChatGPT</p>
+                </div>
+              </div>
+              <span class="font-label-md text-label-md">$490.00</span>
+            </div>
+            <div
+              class="flex items-center justify-between p-md hover:bg-surface-container-low transition-colors rounded-lg group">
+              <div class="flex items-center gap-md">
+                <div
+                  class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-fixed-dim transition-colors">
+                  <span class="material-symbols-outlined text-on-surface-variant"
+                    data-icon="more_horiz">more_horiz</span>
+                </div>
+                <div>
+                  <p class="font-label-md text-label-md">Others</p>
+                  <p class="font-body-sm text-body-sm text-secondary">News, Cloud Storage</p>
+                </div>
+              </div>
+              <span class="font-label-md text-label-md">$367.50</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <section class="mt-xl">
+      <div class="bg-white rounded-xl border border-outline-variant overflow-hidden shadow-sm">
+        <div class="px-lg py-md border-b border-gray-100 flex justify-between items-center bg-surface-container-lowest">
+          <h3 class="font-label-md text-label-md">Spend Trends - 6 Months</h3>
+          <button class="text-primary font-label-sm text-label-sm">View Report</button>
+        </div>
+        <div class="h-64 w-full bg-surface-container-low relative">
+          <img class="w-full h-full object-cover opacity-10"
+            data-alt="A sophisticated financial analytics dashboard displaying smooth blue area charts and data points over a clean white background. The visual style is minimalist and high-tech, with sharp grid lines and professional typography. Cool blue tones and soft grays create a sense of financial security and clarity. The lighting is bright and even, mimicking a professional software interface."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcFBo2NbVOFXWHsd_f9KXv6xC_kgEihH93FLhjx6-t-7EczftunuKLSTXAPP05fWD5LR_XKWn2yHXaLx3VwCvjcVsF0aT3cteNNWtLU4oOve8cWA8lVabod1S3Wo8oasn0nnPuI5FGLZkmmdaB_5jFLC3lz2ElT6ohbckL1rJHNPSx_dvueiYh6kv5_BYOoNLEXV35xr98lvZfvR9vxivlNb7bdFTnTKfJNxh8pRyKV6KB9ZCqkAYdLtXB0DsdxTABW10PwCehFIUz" />
+          <div class="absolute inset-0 flex items-end justify-around px-lg pb-lg">
+            <div class="w-12 bg-primary/20 rounded-t-lg h-[40%] transition-all hover:bg-primary/40"></div>
+            <div class="w-12 bg-primary/20 rounded-t-lg h-[55%] transition-all hover:bg-primary/40"></div>
+            <div class="w-12 bg-primary/20 rounded-t-lg h-[45%] transition-all hover:bg-primary/40"></div>
+            <div class="w-12 bg-primary/20 rounded-t-lg h-[70%] transition-all hover:bg-primary/40"></div>
+            <div class="w-12 bg-primary/20 rounded-t-lg h-[85%] transition-all hover:bg-primary/40"></div>
+            <div class="w-12 bg-primary rounded-t-lg h-[90%] shadow-lg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <nav
+    class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-white border-t border-gray-100 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.02)]">
+    <a class="flex flex-col items-center justify-center text-gray-400 font-manrope text-[11px] font-medium transition-transform duration-200 active:scale-90"
+      href="#">
+      <span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+      <span>Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-blue-600 font-bold font-manrope text-[11px] transition-transform duration-200 active:scale-90"
+      href="#">
+      <span class="material-symbols-outlined mb-1" data-icon="donut_large">donut_large</span>
+      <span>Analytics</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-gray-400 font-manrope text-[11px] font-medium transition-transform duration-200 active:scale-90"
+      href="#">
+      <span class="material-symbols-outlined mb-1" data-icon="subscriptions">subscriptions</span>
+      <span>My Subs</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-gray-400 font-manrope text-[11px] font-medium transition-transform duration-200 active:scale-90"
+      href="#">
+      <span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+      <span>Settings</span>
+    </a>
+  </nav>
+</body>
+
+</html>

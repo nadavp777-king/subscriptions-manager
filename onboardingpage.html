@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Subwise Onboarding</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-container": "#e2e2e2",
+            "surface-container-high": "#e7e8e9",
+            "surface-dim": "#d9dadb",
+            "surface-variant": "#e1e3e4",
+            "surface-container-low": "#f3f4f5",
+            "secondary": "#5e5e5e",
+            "tertiary-container": "#6b7280",
+            "on-tertiary-fixed": "#151c27",
+            "surface-tint": "#0054d6",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#404754",
+            "on-error": "#ffffff",
+            "outline": "#727687",
+            "surface-container-highest": "#e1e3e4",
+            "background": "#f8f9fa",
+            "primary": "#0050cb",
+            "on-primary": "#ffffff",
+            "on-background": "#191c1d",
+            "tertiary-fixed": "#dce2f3",
+            "tertiary-fixed-dim": "#c0c7d6",
+            "inverse-on-surface": "#f0f1f2",
+            "primary-container": "#0066ff",
+            "inverse-surface": "#2e3132",
+            "primary-fixed-dim": "#b3c5ff",
+            "on-primary-fixed-variant": "#003fa4",
+            "on-secondary-fixed": "#1b1b1b",
+            "error": "#ba1a1a",
+            "inverse-primary": "#b3c5ff",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#f8f7ff",
+            "surface-bright": "#f8f9fa",
+            "on-secondary-fixed-variant": "#474747",
+            "on-error-container": "#93000a",
+            "on-secondary-container": "#646464",
+            "on-primary-fixed": "#001849",
+            "on-surface": "#191c1d",
+            "tertiary": "#535a67",
+            "on-tertiary-container": "#f7f7ff",
+            "primary-fixed": "#dae1ff",
+            "surface": "#f8f9fa",
+            "secondary-fixed-dim": "#c6c6c6",
+            "surface-container": "#edeeef",
+            "on-tertiary": "#ffffff",
+            "outline-variant": "#c2c6d8",
+            "on-surface-variant": "#424656",
+            "secondary-fixed": "#e2e2e2",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "sm": "8px",
+            "container-max": "1280px",
+            "xxl": "48px",
+            "md": "16px",
+            "gutter": "24px",
+            "xs": "4px",
+            "lg": "24px",
+            "xl": "32px",
+            "base": "8px"
+          },
+          "fontFamily": {
+            "label-md": ["Manrope"],
+            "display-lg": ["Manrope"],
+            "heading-lg": ["Manrope"],
+            "label-sm": ["Manrope"],
+            "body-sm": ["Manrope"],
+            "display-md": ["Manrope"],
+            "heading-xl": ["Manrope"],
+            "body-md": ["Manrope"],
+            "body-lg": ["Manrope"]
+          },
+          "fontSize": {
+            "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+            "heading-lg": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "display-md": ["36px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "heading-xl": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      background-color: #ffffff;
+      color: #191c1d;
+    }
+  </style>
+  <style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+
+<body class="font-body-md antialiased overflow-x-hidden">
+  <!-- Onboarding Flow Canvas -->
+  <main
+    class="min-h-screen flex flex-col md:flex-row max-w-container-max mx-auto px-lg md:px-xl py-xl md:py-xxl gap-xl">
+    <!-- Content Column -->
+    <section class="flex-1 flex flex-col justify-center space-y-xl z-10">
+      <!-- Branding -->
+      <div class="flex items-center gap-sm">
+        <div class="w-8 h-8 bg-primary-container rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-white"
+            style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+        </div>
+        <span class="font-display-md text-on-surface tracking-tighter">Subwise</span>
+      </div>
+      <!-- Hero Headline -->
+      <div class="space-y-md">
+        <h1 class="font-display-lg text-on-surface leading-tight">
+          Take command of your <span class="text-primary-container">recurring world.</span>
+        </h1>
+        <p class="font-body-lg text-secondary max-w-md">
+          The ultimate fintech companion to track, optimize, and master every subscription in your financial ecosystem.
+        </p>
+      </div>
+      <!-- Bento Features -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+        <!-- Unified View Card -->
+        <div
+          class="p-lg bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary-container transition-colors shadow-sm">
+          <div class="mb-md text-primary-container">
+            <span class="material-symbols-outlined text-[32px]">dashboard_customize</span>
+          </div>
+          <h3 class="font-heading-xl text-on-surface mb-xs">Unified View</h3>
+          <p class="font-body-sm text-secondary">A singular, transparent dashboard for every digital commitment you own.
+          </p>
+        </div>
+        <!-- Smart Alerts Card -->
+        <div
+          class="p-lg bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary-container transition-colors shadow-sm">
+          <div class="mb-md text-primary-container">
+            <span class="material-symbols-outlined text-[32px]">notifications_active</span>
+          </div>
+          <h3 class="font-heading-xl text-on-surface mb-xs">Smart Alerts</h3>
+          <p class="font-body-sm text-secondary">Predictive notifications before trials end or prices increase. Never
+            overpay again.</p>
+        </div>
+      </div>
+      <!-- Primary Action -->
+      <div class="pt-md flex flex-col sm:flex-row items-center gap-md">
+        <button
+          class="w-full sm:w-auto px-xxl py-md bg-primary-container text-on-primary font-label-md rounded-lg shadow-lg hover:bg-primary transition-all active:scale-95 text-center">
+          Get Started
+        </button>
+        <button
+          class="w-full sm:w-auto px-xl py-md bg-transparent text-on-surface font-label-md rounded-lg border border-outline-variant hover:bg-surface-container-high transition-all text-center">
+          Explore Demo
+        </button>
+      </div>
+      <!-- Trust Indicator -->
+      <div class="flex items-center gap-sm pt-xl">
+        <div class="flex -space-x-xs">
+          <img class="w-8 h-8 rounded-full border-2 border-white"
+            data-alt="A professional portrait of a young male financial analyst smiling, set against a blurred corporate office background with clean, bright lighting and a high-key modern aesthetic. The image uses a natural color palette to convey trust and approachability in a premium fintech design system."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4nWMm71S5tJ17iEYqWuIhu34_AviJYAhrZ64ugR99LEkjGKrhmgx16uTHYwPFJRVer-5dxgY1PaYkDZPWYkjn2LFvfnUmKOKJHc5-LIelvD-x-jUHYYFcK44T_lMvak9W90ah6tWxrPTTgrMcM78zNTrIOVdc5Fy_eaGsiBDDgjqG86KEZZZNQtT4AvQIssHayR0MO5DRai9cMQKNEc8IkADGhdXdEETQebtzEo0Do9p8upiMVFfOn-FbLMJeR0PeMAymvCSILCNz" />
+          <img class="w-8 h-8 rounded-full border-2 border-white"
+            data-alt="A close-up portrait of a professional female executive with a confident expression, photographed in a minimalist studio environment with soft, ambient white lighting. The visual style is crisp and modern, reflecting the efficiency and transparency of a high-end banking application."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-IPinalTbnMjmcT4zwDYdtt9B9Xoq0CFRMnfz5h5HMwIwOqwBcE4TICRV7IdcJ0VpbVHTKTPQ7DQV4B9WZwolyq_466Qy_NzzKqlMRXwkMaugGQZMkM2F0Y9DDqvQcjjERpPk4EAbfbSCmCWDkyCtDcAonrHeX8_2Sx9WimRkKd6ndLW5pjWCSNeRGotXorSeCB4NMuS0DaaJYEUgG2QfFcok3SWOo_UGjRlY-eGfGxtDnisZJcp9jx-KLsVm2uQR7kOtXGUtdzI2" />
+          <div
+            class="w-8 h-8 rounded-full bg-secondary-container border-2 border-white flex items-center justify-center text-[10px] font-bold">
+            +10k</div>
+        </div>
+        <p class="font-label-sm text-secondary">Trusted by thousands of smart savers</p>
+      </div>
+    </section>
+    <!-- Visual Column -->
+    <section class="flex-1 relative min-h-[400px] md:min-h-[600px] flex items-center justify-center">
+      <!-- Background Decorative Elements -->
+      <div
+        class="absolute inset-0 bg-gradient-to-tr from-surface-container-low to-white rounded-[48px] -rotate-2 scale-105 z-0">
+      </div>
+      <!-- Main Hero Illustration / Card Interface -->
+      <div class="relative z-10 w-full max-w-lg space-y-md">
+        <!-- Floating Card 1: Subscription Breakdown -->
+        <div
+          class="bg-white p-lg rounded-xl shadow-xl border border-surface-container-high translate-x-4 md:translate-x-12 animate-float">
+          <div class="flex justify-between items-start mb-md">
+            <div>
+              <span class="font-label-sm text-secondary uppercase tracking-widest">Monthly Spend</span>
+              <div class="font-display-md text-on-surface">$284.50</div>
+            </div>
+            <div class="p-sm bg-error-container text-error rounded-full flex items-center gap-xs">
+              <span class="material-symbols-outlined text-sm">trending_up</span>
+              <span class="text-[10px] font-bold">12%</span>
+            </div>
+          </div>
+          <div class="space-y-sm">
+            <div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+              <div class="h-full bg-primary-container w-[65%]"></div>
+            </div>
+            <div class="flex justify-between font-label-sm text-secondary">
+              <span>Target: $200.00</span>
+              <span>Remaining: $84.50</span>
+            </div>
+          </div>
+        </div>
+        <!-- Main Illustration Image -->
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/3]">
+          <img class="w-full h-full object-cover"
+            data-alt="A sophisticated digital interface showing clean financial data charts and subscription management tools. The setting is a minimalist workspace with soft daylight filtering through, creating a calm and professional mood. The palette consists of crisp whites, deep slate grays, and vibrant electric blue accents to represent technological precision and authority in wealth management."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzq-h8AF1y1iTyxGDRUlep9loX20wB0tgIvK_IfmieO-7k9Zy3NWu80FJDG40MXDWDF9p7XOiSla1vTn_X3svGtREaNf3Y97SoYvB7iRcVc3P863usd4ceWcK-zN4KKm4Ui7wV6Ula_lyzrOjJlzHD-Y1DJFyUDiB6aO_keGJ-YWin2JvhJmoN7SaraBBI7VtltKEjfqumuBCFPBlTTi4VnIQBrL1b51VYhA15dBli1DOdk4zkU-4drLX9KnP3w8FU8bFSV-SUnsxT" />
+          <!-- Overlay Overlay Details -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-primary-container/20 to-transparent flex flex-col justify-end p-lg">
+            <div class="bg-white/90 backdrop-blur-md p-md rounded-lg flex items-center gap-md">
+              <div class="w-10 h-10 bg-on-surface rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-white">shield_with_heart</span>
+              </div>
+              <div>
+                <p class="font-label-md text-on-surface">Secure Financial Sync</p>
+                <p class="font-body-sm text-secondary">Bank-grade 256-bit encryption</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Floating Card 2: Subscription List -->
+        <div
+          class="bg-white p-lg rounded-xl shadow-lg border border-surface-container-high -translate-x-4 md:-translate-x-8">
+          <div class="space-y-md">
+            <div class="flex items-center gap-md">
+              <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary">movie</span>
+              </div>
+              <div class="flex-1">
+                <p class="font-label-md text-on-surface">Premium Streaming</p>
+                <p class="text-[10px] text-secondary">Due tomorrow • $15.99</p>
+              </div>
+              <span class="material-symbols-outlined text-primary-container">check_circle</span>
+            </div>
+            <div class="flex items-center gap-md opacity-60">
+              <div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary">cloud_download</span>
+              </div>
+              <div class="flex-1">
+                <p class="font-label-md text-on-surface">Cloud Storage</p>
+                <p class="text-[10px] text-secondary">Due in 5 days • $9.99</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Simple Footer for Onboarding -->
+  <footer
+    class="max-w-container-max mx-auto px-lg py-xl flex flex-col sm:flex-row justify-between items-center border-t border-surface-container-high gap-md">
+    <p class="font-body-sm text-secondary">© 2024 Subwise Inc. All rights reserved.</p>
+    <div class="flex gap-lg">
+      <a class="font-label-sm text-secondary hover:text-primary-container transition-colors" href="#">Privacy</a>
+      <a class="font-label-sm text-secondary hover:text-primary-container transition-colors" href="#">Terms</a>
+      <a class="font-label-sm text-secondary hover:text-primary-container transition-colors" href="#">Help</a>
+    </div>
+  </footer>
+</body>
+
+</html>
