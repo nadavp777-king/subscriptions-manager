@@ -31,10 +31,10 @@ export const SubscriptionProvider = ({ children }) => {
               today.setHours(0, 0, 0, 0); // normalize to midnight
               let changed = false;
 
-              // advance until the date is no longer in the past
-              while (dateObj < today) {
+              // advance until the date is strictly in the future (tomorrow or later)
+              while (dateObj <= today) {
                 changed = true;
-                if (row.billing_cycle === 'yearly') {
+                if (row.billing_cycle?.toLowerCase() === 'yearly') {
                   dateObj.setFullYear(dateObj.getFullYear() + 1);
                 } else {
                   dateObj.setMonth(dateObj.getMonth() + 1);
