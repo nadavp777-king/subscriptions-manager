@@ -45,7 +45,9 @@ const Navbar = () => {
         </button>
 
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
-          <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Home</NavLink>
+          {!user && (
+            <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Home</NavLink>
+          )}
           {user && (
             <>
               <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Dashboard</NavLink>
