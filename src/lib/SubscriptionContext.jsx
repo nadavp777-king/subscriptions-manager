@@ -26,9 +26,12 @@ export const SubscriptionProvider = ({ children }) => {
           const mappedData = data.map(row => {
             let nextBillingDate = row.next_billing_date;
             if (nextBillingDate) {
-              let dateObj = new Date(nextBillingDate);
+              // Parse components to avoid UTC timezone offsets shifting the date by a few hours
+              const [y, m, d] = nextBillingDate.split('T')[0].split('-').map(Number);
+              let dateObj = new Date(y, m - 1, d);
+              
               const today = new Date();
-              today.setHours(0, 0, 0, 0); // normalize to midnight
+              today.setHours(0, 0, 0, 0); // normalize to local midnight
               let changed = false;
 
               // advance until the date is strictly in the future (tomorrow or later)
