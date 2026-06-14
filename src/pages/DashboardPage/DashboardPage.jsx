@@ -3,6 +3,7 @@ import { useAuth } from '../../lib/AuthContext';
 import { useSubscriptions } from '../../lib/SubscriptionContext';
 import { supabase } from '../../lib/supabase';
 import SetupWizard from '../../components/SetupWizard/SetupWizard';
+import EditSubscriptionModal from '../../components/EditSubscriptionModal/EditSubscriptionModal';
 import { generateInsights, getInsightForSubscription, fetchMarketPrices } from '../../lib/recommendations';
 import './DashboardPage.css';
 
@@ -10,6 +11,7 @@ const DashboardPage = () => {
   const { user, profile } = useAuth();
   const { subscriptions, loading } = useSubscriptions();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [editingSub, setEditingSub] = useState(null);
   const [showWizard, setShowWizard] = useState(false);
   const [marketData, setMarketData] = useState(null);
   const [loadingMarket, setLoadingMarket] = useState(true);
@@ -204,7 +206,18 @@ const DashboardPage = () => {
                           />
                           <span className="material-symbols-outlined" style={{ display: 'none' }}>{styleInfo.icon}</span>
                         </div>
-                        <span className="due-label">{sub.billingCycle}</span>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                          <button 
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-outline)', display: 'flex', alignItems: 'center', transition: 'color 0.2s' }}
+                            onClick={() => setEditingSub(sub)}
+                            title="Edit Subscription"
+                            onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-on-surface)'}
+                            onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-outline)'}
+                          >
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>edit</span>
+                          </button>
+                          <span className="due-label">{sub.billingCycle}</span>
+                        </div>
                       </div>
                       <div className="card-info" style={{ position: 'relative' }}>
                         {getSubLinks(sub.name).manage && (
@@ -297,6 +310,13 @@ const DashboardPage = () => {
         <SetupWizard 
           isAddMode={true} 
           onClose={() => setIsAddModalOpen(false)} 
+        />
+      )}
+
+      {editingSub && (
+        <EditSubscriptionModal
+          sub={editingSub}
+          onClose={() => setEditingSub(null)}
         />
       )}
 
