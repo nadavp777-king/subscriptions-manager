@@ -3,8 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
-import SubscriptionPage from './pages/SubscriptionPage/SubscriptionPage';
-import AnalyticsPage from './pages/AnalyticsPage/AnalyticsPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
   return (
@@ -12,11 +13,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<OnboardingPage />} />
-          <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="subscriptions" element={<SubscriptionPage />} />
-          <Route path="analytics" element={<AnalyticsPage />} />
-          {/* Detail view for specific subscription if needed separately */}
-          <Route path="subscription/:id" element={<SubscriptionPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          
+          <Route element={<ProtectedRoute />}>
+            <Route path="dashboard" element={<DashboardPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

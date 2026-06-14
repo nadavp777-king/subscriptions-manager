@@ -107,20 +107,47 @@
 
 .sidebar-col { display: flex; flex-direction: column; gap: var(--spacing-lg); }
 
-.alerts-card { background-color: var(--color-primary-container); color: white; border: none; }
-.alerts-card .card-header { justify-content: flex-start; gap: var(--spacing-md); }
+.alerts-card { background-color: var(--color-surface-container-lowest); color: var(--color-on-surface); border: 1px solid var(--color-outline-variant); }
+.alerts-card .card-header { justify-content: flex-start; gap: var(--spacing-md); color: var(--color-on-surface); }
+.alerts-card .card-header h3 { color: var(--color-on-surface); }
 
 .alert-item {
   display: flex;
   gap: var(--spacing-md);
-  background-color: rgba(255,255,255,0.1);
   padding: var(--spacing-md);
   border-radius: var(--radius-default);
   margin-bottom: var(--spacing-md);
+  border-left: 4px solid transparent;
 }
 
-.alert-title { font-weight: 600; font-size: var(--font-label-md-size); }
-.alert-desc { font-size: var(--font-body-sm-size); opacity: 0.8; }
+.alert-item.severity-high {
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  border-left-color: var(--color-error);
+}
+.alert-item.severity-high .alert-desc { opacity: 0.9; }
+
+.alert-item.severity-medium {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  border-left-color: var(--color-primary);
+}
+.alert-item.severity-medium .alert-desc { opacity: 0.9; }
+
+.alert-item.severity-low {
+  background-color: var(--color-tertiary-container);
+  color: var(--color-on-tertiary-container);
+  border-left-color: var(--color-tertiary);
+}
+.alert-item.severity-low .alert-desc { opacity: 0.9; }
+
+.alert-item:not([class*="severity-"]) {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+}
+
+.alert-title { font-weight: 700; font-size: var(--font-label-lg-size); margin-bottom: 4px; }
+.alert-desc { font-size: var(--font-body-sm-size); line-height: 1.4; opacity: 0.8; }
 
 .cat-list { display: flex; flex-direction: column; gap: var(--spacing-sm); }
 .cat-item { display: flex; justify-content: space-between; align-items: center; padding: var(--spacing-md); border-radius: var(--radius-default); transition: background-color 0.2s; }

@@ -1,20 +1,53 @@
 import React from 'react';
 import './HeroSection.css';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../lib/AuthContext';
+import { useSubscriptions } from '../../lib/SubscriptionContext';
 
 const HeroSection = () => {
+  const { user, profile } = useAuth();
+  const { subscriptions = [] } = useSubscriptions();
+
+  const userName = profile?.full_name?.split(' ')[0] || user?.user_metadata?.full_name?.split(' ')[0] || user?.email?.split('@')[0] || 'friend';
+
+  const totalSpend = subscriptions.reduce((total, sub) => {
+    const monthlyPrice = sub.billingCycle === 'Yearly' ? sub.price / 12 : sub.price;
+    return total + monthlyPrice;
+  }, 0);
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+  };
+
   return (
     <section className="hero-section">
       <div className="hero-content">
-        <h1 className="hero-title">
-          Take command of your <span className="highlight">recurring world.</span>
-        </h1>
-        <p className="hero-subtitle">
-          The ultimate fintech companion to track, optimize, and master every subscription in your financial ecosystem.
-        </p>
-        <div className="hero-actions">
-          <button className="btn-primary">Get Started</button>
-          <button className="btn-secondary">Explore Demo</button>
-        </div>
+        {user ? (
+          <>
+            <h1 className="hero-title">
+              What's up, <span className="highlight">{userName}!</span> 🚀
+            </h1>
+            <p className="hero-subtitle">
+              Ready to slay those bills? Dive back into your dashboard and keep crushing your subscription game.
+            </p>
+            <div className="hero-actions">
+              <Link to="/dashboard" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}>Go to Dashboard</Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <h1 className="hero-title">
+              Take command of your <span className="highlight">recurring world.</span>
+            </h1>
+            <p className="hero-subtitle">
+              The ultimate fintech companion to track, optimize, and master every subscription in your financial ecosystem.
+            </p>
+            <div className="hero-actions">
+              <Link to="/register" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}>Get Started</Link>
+              <Link to="/login" className="btn-secondary" style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}>Sign In</Link>
+            </div>
+          </>
+        )}
         <div className="trust-indicator">
           <div className="avatar-group">
             <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4nWMm71S5tJ17iEYqWuIhu34_AviJYAhrZ64ugR99LEkjGKrhmgx16uTHYwPFJRVer-5dxgY1PaYkDZPWYkjn2LFvfnUmKOKJHc5-LIelvD-x-jUHYYFcK44T_lMvak9W90ah6tWxrPTTgrMcM78zNTrIOVdc5Fy_eaGsiBDDgjqG86KEZZZNQtT4AvQIssHayR0MO5DRai9cMQKNEc8IkADGhdXdEETQebtzEo0Do9p8upiMVFfOn-FbLMJeR0PeMAymvCSILCNz" alt="User 1" />
@@ -30,12 +63,14 @@ const HeroSection = () => {
           <div className="floating-card spend-card">
             <div className="card-header">
               <span className="card-label">Monthly Spend</span>
-              <div className="card-amount">$284.50</div>
+              <div className="card-amount">{user && totalSpend > 0 ? formatCurrency(totalSpend) : '$284.50'}</div>
             </div>
-            <div className="card-trend">
-              <span className="material-symbols-outlined">trending_up</span>
-              <span>12%</span>
-            </div>
+            {(!user || totalSpend === 0) && (
+              <div className="card-trend">
+                <span className="material-symbols-outlined">trending_up</span>
+                <span>12%</span>
+              </div>
+            )}
           </div>
           <img 
             className="main-visual-img"

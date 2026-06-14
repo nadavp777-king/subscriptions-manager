@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../lib/AuthContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const { user, profile, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -12,6 +16,15 @@ const Navbar = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  const handleLogout = async () => {
+    await logout();
+    closeMenu();
+    navigate('/login');
+  };
+
+  const avatarUrl = user?.user_metadata?.avatar_url || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+  const userName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
 
   return (
     <nav className="navbar">
@@ -33,21 +46,56 @@ const Navbar = () => {
 
         <div className={`navbar-links ${isMenuOpen ? 'open' : ''}`}>
           <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Home</NavLink>
-          <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Dashboard</NavLink>
-          <NavLink to="/analytics" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Analytics</NavLink>
-          <NavLink to="/subscriptions" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Subscriptions</NavLink>
+          {user && (
+            <>
+              <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'} onClick={closeMenu}>Dashboard</NavLink>
+            </>
+          )}
         </div>
 
         <div className="navbar-actions">
-          <button className="nav-icon-btn">
-            <span className="material-symbols-outlined">notifications</span>
-          </button>
-          <NavLink to="/subscriptions" className="user-profile" onClick={closeMenu}>
-            <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhfl3C1z1iLti01uxpbpiJKHDqutpcDY8X19aS7a6LwOlYzHD0mnl3fIEwp5Ii2jCu0xN8HfR6U59DWhyf8Hujn83JDdP5aTq66VfR1how3Y-cpA_2UOLCh7mcbJIRTRYNUVu3gbTXskikuorj6LLlvgl6ijTV0ioHm-MqwLzb1Wg6ZZfEkK3lbjXT9vf79cdEhbQi9z_AIgnuYJgHyYd10iHUcxF4BJXI-MVOgAGWEkioA0pYoan2fcf8NRztlNDc5p9zSPKAufLa" 
-              alt="User" 
-            />
-          </NavLink>
+          {user ? (
+            <>
+
+              <div className="user-profile-container" style={{ position: 'relative' }}>
+                <button 
+                  className="user-profile-btn" 
+                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', cursor: 'pointer', padding: '4px', borderRadius: '24px' }}
+                >
+                  <span style={{ fontWeight: '600', fontSize: '14px', color: 'var(--color-on-surface)' }}>{userName}</span>
+                  <div className="user-profile-avatar" style={{ width: '36px', height: '36px', borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(0, 84, 214, 0.1)' }}>
+                    <img 
+                      src={avatarUrl} 
+                      alt={userName} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  </div>
+                  <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--color-on-surface-variant)' }}>
+                    expand_more
+                  </span>
+                </button>
+                
+                {isProfileDropdownOpen && (
+                  <div className="profile-dropdown">
+                    <div className="dropdown-header">
+                      <p className="dropdown-name">{userName}</p>
+                      <p className="dropdown-email">{user.email}</p>
+                    </div>
+                    <button onClick={handleLogout} className="dropdown-item logout-btn">
+                      <span className="material-symbols-outlined">logout</span>
+                      Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <Link to="/login" className="btn-secondary" style={{ textDecoration: 'none' }} onClick={closeMenu}>Sign In</Link>
+              <Link to="/register" className="btn-primary" style={{ textDecoration: 'none' }} onClick={closeMenu}>Get Started</Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

@@ -1,0 +1,266 @@
+.setup-wizard-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.setup-wizard-modal {
+  background-color: var(--color-surface-container-lowest);
+  width: 100%;
+  max-width: 600px;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-header {
+  padding: var(--spacing-xl);
+  text-align: center;
+  background-color: var(--color-surface-container-low);
+  border-bottom: 1px solid var(--color-surface-container-high);
+}
+
+.wizard-icon-box {
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-md);
+}
+
+.wizard-icon-box .material-symbols-outlined {
+  font-size: 32px;
+}
+
+.wizard-header h2 {
+  font-family: var(--font-display-md-family);
+  font-size: var(--font-heading-xl-size);
+  color: var(--color-on-surface);
+  margin-bottom: var(--spacing-sm);
+}
+
+.wizard-header p {
+  color: var(--color-secondary);
+  font-size: var(--font-body-md-size);
+}
+
+.wizard-content {
+  padding: var(--spacing-xl);
+  overflow-y: auto;
+  flex: 1;
+}
+
+.popular-subs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.popular-sub-card {
+  border: 1px solid var(--color-surface-container-high);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: var(--color-surface-container-lowest);
+  position: relative;
+}
+
+.popular-sub-card:hover {
+  border-color: var(--color-primary-container);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.popular-sub-card.selected {
+  border-color: var(--color-primary-container);
+  background-color: var(--color-primary-fixed);
+}
+
+.sub-logo-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.sub-logo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sub-logo-fallback {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary-container);
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-info h4 {
+  font-size: var(--font-label-md-size);
+  color: var(--color-on-surface);
+  margin-bottom: 2px;
+}
+
+.sub-info p {
+  font-size: var(--font-label-sm-size);
+  color: var(--color-secondary);
+}
+
+.selection-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: var(--color-outline-variant);
+}
+
+.popular-sub-card.selected .selection-indicator {
+  color: var(--color-primary-container);
+}
+
+.custom-sub-section {
+  border-top: 1px solid var(--color-surface-container-high);
+  padding-top: var(--spacing-lg);
+}
+
+.toggle-custom-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-primary-container);
+  font-weight: 600;
+  width: 100%;
+  justify-content: center;
+}
+
+.custom-sub-form {
+  margin-top: var(--spacing-md);
+  background-color: transparent;
+  padding: 0;
+}
+
+.custom-sub-form .form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.custom-sub-form .form-group-row {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.custom-sub-form .form-group-row .form-group {
+  flex: 1;
+}
+
+.custom-sub-form label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-label-md-size);
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.custom-sub-form input,
+.custom-sub-form select {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-md);
+  color: var(--color-on-surface);
+  font-family: inherit;
+  font-size: var(--font-body-md-size);
+  transition: all 0.2s ease;
+  appearance: none; /* removes native select arrow to make it look cleaner, though we might want to keep it or add a custom one */
+}
+
+/* Add custom arrow for select */
+.custom-sub-form select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+.custom-sub-form input:focus,
+.custom-sub-form select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-container);
+}
+
+.custom-sub-form input::placeholder {
+  color: var(--color-outline);
+}
+
+.wizard-footer {
+  padding: var(--spacing-xl);
+  border-top: 1px solid var(--color-surface-container-high);
+  background-color: var(--color-surface-container-lowest);
+}
+
+.w-full {
+  width: 100%;
+}
+
+.mt-sm {
+  margin-top: var(--spacing-sm);
+}
+
+.skip-btn {
+  color: var(--color-secondary);
+}
+
+.skip-btn:hover {
+  color: var(--color-on-surface);
+}
+
+.animate-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

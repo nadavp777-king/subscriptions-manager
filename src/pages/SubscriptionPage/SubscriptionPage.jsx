@@ -1,18 +1,142 @@
 import React from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useSubscriptions } from '../../lib/SubscriptionContext';
 import './SubscriptionPage.css';
 
 const SubscriptionPage = () => {
+  const { id } = useParams();
+  const { subscriptions, removeSubscription } = useSubscriptions();
+  const navigate = useNavigate();
+
+  // Helper to format currency
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+  };
+
+  // Quick helper to determine an icon and color
+  const getCategoryIcon = (category) => {
+    switch(category) {
+      case 'Entertainment': return { icon: 'movie', color: 'red' };
+      case 'Productivity': return { icon: 'work', color: 'blue' };
+      case 'Utilities': return { icon: 'bolt', color: 'green' };
+      case 'Health': return { icon: 'fitness_center', color: 'orange' };
+      default: return { icon: 'category', color: 'black' };
+    }
+  };
+
+  const getLogoUrl = (name) => {
+    const overrides = {
+      'youtube premium': 'youtube.com',
+      'amazon prime': 'amazon.com',
+      'disney+': 'disneyplus.com',
+      'chatgpt plus': 'openai.com',
+      'xbox game pass': 'xbox.com',
+      'playstation plus': 'playstation.com',
+      'apple music': 'apple.com'
+    };
+    const key = name.toLowerCase().trim();
+    const domain = overrides[key] || (key.replace(/\s+/g, '') + '.com');
+    return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  };
+
+  if (subscriptions.length === 0) {
+    return (
+      <div className="subscription-page">
+        <section className="dashboard-empty-state" style={{ textAlign: 'center', padding: 'var(--spacing-3xl) var(--spacing-lg)', marginTop: 'var(--spacing-xl)' }}>
+          <div style={{ 
+            width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--color-surface-container)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto var(--spacing-lg)'
+          }}>
+            <span className="material-symbols-outlined" style={{ fontSize: '40px', color: 'var(--color-outline)' }}>receipt_long</span>
+          </div>
+          <h2 style={{ marginBottom: 'var(--spacing-sm)' }}>No active subscriptions</h2>
+          <p style={{ color: 'var(--color-on-surface-variant)', marginBottom: 'var(--spacing-xl)', maxWidth: '400px', margin: '0 auto var(--spacing-xl)' }}>
+            Go to the dashboard to add your first subscription and start managing your expenses.
+          </p>
+          <Link to="/dashboard" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}>
+            Go to Dashboard
+          </Link>
+        </section>
+      </div>
+    );
+  }
+
+  // If no ID is provided, just show a full list
+  if (!id) {
+    return (
+      <div className="subscription-page">
+        <header className="page-header" style={{ marginBottom: 'var(--spacing-xl)' }}>
+          <h1>All Subscriptions</h1>
+          <p>Manage all your recurring commitments</p>
+        </header>
+
+        <div className="subs-grid" style={{ display: 'grid', gap: 'var(--spacing-lg)' }}>
+          {subscriptions.map(sub => {
+            const styleInfo = getCategoryIcon(sub.category);
+            return (
+              <div className="sub-item" style={{ backgroundColor: 'var(--color-surface)', padding: 'var(--spacing-lg)', borderRadius: 'var(--radius-md)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid var(--color-outline-variant)' }} key={sub.id}>
+                <div className="sub-main" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
+                  <div className={`sub-icon ${styleInfo.color}`} style={{ width: '48px', height: '48px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: `var(--color-surface-container)`, overflow: 'hidden' }}>
+                    <img 
+                      src={getLogoUrl(sub.name)} 
+                      alt={sub.name} 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'block';
+                      }}
+                    />
+                    <span className="material-symbols-outlined" style={{ display: 'none' }}>{styleInfo.icon}</span>
+                  </div>
+                  <div className="sub-text">
+                    <p className="sub-name" style={{ fontWeight: '600', fontSize: 'var(--font-body-lg-size)' }}>{sub.name}</p>
+                    <p className="sub-cat" style={{ color: 'var(--color-on-surface-variant)', fontSize: 'var(--font-body-sm-size)' }}>{sub.category} • Renews {new Date(sub.nextBillingDate).toLocaleDateString()}</p>
+                  </div>
+                </div>
+                <div className="sub-actions" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-lg)' }}>
+                  <div className="sub-price" style={{ textAlign: 'right' }}>
+                    <p className="amount" style={{ fontWeight: 'bold', fontSize: 'var(--font-body-lg-size)' }}>{formatCurrency(sub.price)}</p>
+                    <p className="period" style={{ color: 'var(--color-on-surface-variant)', fontSize: 'var(--font-body-sm-size)' }}>{sub.billingCycle}</p>
+                  </div>
+                  <Link to={`/subscription/${sub.id}`} className="btn-secondary" style={{ textDecoration: 'none' }}>Details</Link>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // Detail View
+  const sub = subscriptions.find(s => s.id === id);
+  if (!sub) {
+    return <div style={{ padding: '2rem' }}>Subscription not found. <Link to="/subscriptions">Go back</Link></div>;
+  }
+
+  const handleCancel = () => {
+    if (window.confirm(`Are you sure you want to remove ${sub.name}?`)) {
+      removeSubscription(sub.id);
+      navigate('/subscriptions');
+    }
+  };
+
   return (
     <div className="subscription-page">
-      <header className="sub-header">
-        <div className="brand-logo">
-          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDt1xew4BMYH0tbzeYhwSNQOOH74J95f_ea0WD-lgrL6D6FFNZ27iqVR29Zck8NQFbdMEb3fEdCvX9sCi0cMi__lRxeteY_fLKO5JmcMzZvbXUuSmhLUJs7YdOXN7raCY13Yf4vEPN5Ew4VA-D1daaBTSd6XdcPJrJFWyjJ27xNEVuiHBERKWBfHiDsZnk5xlEUZtLJOBPStpub7t9wAPJdmxvDkDSPBzXTJJ7I7l215_x8hVu2mSiyEjCsU_R5095gfPj75i_DCO3d" alt="Netflix" />
-        </div>
-        <h1 className="sub-title">Netflix</h1>
-        <div className="status-container">
-          <span className="status-badge">
-            <span className="dot"></span> Active
-          </span>
+      <header className="sub-header" style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-md)' }}>
+        <img 
+          src={getLogoUrl(sub.name)} 
+          alt={sub.name} 
+          style={{ width: '64px', height: '64px', borderRadius: '16px', objectFit: 'cover' }}
+          onError={(e) => { e.target.style.display = 'none'; }}
+        />
+        <div>
+          <h1 className="sub-title" style={{ margin: 0 }}>{sub.name}</h1>
+          <div className="status-container" style={{ marginTop: 'var(--spacing-xs)' }}>
+            <span className="status-badge">
+              <span className="dot"></span> Active
+            </span>
+          </div>
         </div>
       </header>
 
@@ -22,103 +146,38 @@ const SubscriptionPage = () => {
             <h2>Subscription Details</h2>
             <div className="details-row">
               <div className="detail-item">
-                <p className="label">Current Plan</p>
-                <p className="value">Premium Ultra HD</p>
-                <p className="sub-value">4K + HDR, 4 simultaneous screens</p>
+                <p className="label">Category</p>
+                <p className="value">{sub.category}</p>
               </div>
               <div className="detail-item">
                 <p className="label">Next Billing Date</p>
                 <div className="date-box">
                   <span className="material-symbols-outlined">calendar_today</span>
-                  <p className="value">Oct 15, 2023</p>
+                  <p className="value">{new Date(sub.nextBillingDate).toLocaleDateString()}</p>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="spending-trend-card">
-            <div className="card-header">
-              <h2>Spending Trend</h2>
-              <span className="trend-label">Stable Pricing</span>
-            </div>
-            <div className="chart-sim">
-              <div className="bar-container"><div className="bar" style={{ height: '45%' }}></div><span>Jun</span></div>
-              <div className="bar-container"><div className="bar" style={{ height: '60%' }}></div><span>Jul</span></div>
-              <div className="bar-container"><div className="bar" style={{ height: '55%' }}></div><span>Aug</span></div>
-              <div className="bar-container"><div className="bar active" style={{ height: '85%' }}></div><span className="active">Sep</span></div>
-              <div className="bar-container"><div className="bar ghost" style={{ height: '40%' }}></div><span>Oct</span></div>
-            </div>
-
           </div>
         </div>
 
         <div className="side-col">
           <div className="cost-card">
-            <p className="label">Monthly Cost</p>
+            <p className="label">Cost</p>
             <div className="price-box">
-              <span className="price">$19.99</span>
-              <span className="period">/mo</span>
-            </div>
-            <div className="cost-footer">
-              <p>Total Paid (2023)</p>
-              <p className="total">$179.91</p>
+              <span className="price">{formatCurrency(sub.price)}</span>
+              <span className="period">/{sub.billingCycle === 'Yearly' ? 'yr' : 'mo'}</span>
             </div>
           </div>
 
           <div className="actions-card">
             <h3>Quick Actions</h3>
-            <button className="btn-cancel">
+            <button className="btn-cancel" onClick={handleCancel}>
               <span className="material-symbols-outlined">cancel</span>
-              Cancel via Subwise
+              Remove Subscription
             </button>
-            <button className="btn-outline">
-              <span className="material-symbols-outlined">upgrade</span>
-              Change Plan
-            </button>
-            <p className="secure-text">Secured and verified by Subwise protection.</p>
-          </div>
-
-          <div className="alert-card">
-            <div className="alert-icon">
-              <span className="material-symbols-outlined">info</span>
-            </div>
-            <div className="alert-content">
-              <p className="alert-title">Billing Alert</p>
-              <p className="alert-desc">Your price has been stable for the last 12 months. No upcoming increases detected.</p>
-            </div>
           </div>
         </div>
       </div>
-
-      <section className="transactions-section">
-        <h2>Recent Transactions</h2>
-        <div className="transactions-container">
-          <div className="tx-list">
-            {[
-              { date: 'Sept 15, 2023', amount: '-$19.99' },
-              { date: 'Aug 15, 2023', amount: '-$19.99' },
-              { date: 'Jul 15, 2023', amount: '-$19.99' }
-            ].map((tx, i) => (
-              <div key={i} className="tx-row">
-                <div className="tx-main">
-                  <div className="tx-icon"><span className="material-symbols-outlined">receipt_long</span></div>
-                  <div className="tx-info">
-                    <p className="tx-name">Subscription Payment</p>
-                    <p className="tx-date">{tx.date} • Visa ****4242</p>
-                  </div>
-                </div>
-                <div className="tx-amount">
-                  <p className="amount">{tx.amount}</p>
-                  <p className="status">Completed</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="tx-footer">
-            <button className="view-all-btn">View All History</button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
