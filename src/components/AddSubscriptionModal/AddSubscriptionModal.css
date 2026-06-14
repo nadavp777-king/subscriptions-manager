@@ -128,7 +128,7 @@
 }
 
 .price-input-wrapper input {
-  padding-left: calc(var(--spacing-md) * 2.5);
+  padding-left: 36px !important;
 }
 
 .modal-footer {
