@@ -25,6 +25,7 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
   const [customPrice, setCustomPrice] = useState('');
   const [customCycle, setCustomCycle] = useState('Monthly');
   const [customCategory, setCustomCategory] = useState('Entertainment');
+  const [customNextBillingDate, setCustomNextBillingDate] = useState('');
 
   const toggleSubscription = (sub) => {
     const newSet = new Set(selectedSubs);
@@ -62,7 +63,7 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
           price: parseFloat(customPrice),
           billingCycle: customCycle,
           category: customCategory,
-          nextBillingDate: new Date().toISOString()
+          nextBillingDate: customNextBillingDate || new Date().toISOString()
         });
       }
 
@@ -180,6 +181,16 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
                       <option value="Yearly">Yearly</option>
                     </select>
                   </div>
+                <div className="form-group-row mt-sm">
+                  <div className="form-group">
+                    <label>First Billing Date</label>
+                    <input 
+                      type="date"
+                      value={customNextBillingDate}
+                      onChange={(e) => setCustomNextBillingDate(e.target.value)}
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
                   <div className="form-group">
                     <label>Category</label>
                     <select value={customCategory} onChange={(e) => setCustomCategory(e.target.value)}>
@@ -187,6 +198,7 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
                       <option value="Productivity">Productivity</option>
                       <option value="Utilities">Utilities</option>
                       <option value="Health">Health</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                 </div>

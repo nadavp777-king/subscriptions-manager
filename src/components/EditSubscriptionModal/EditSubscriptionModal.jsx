@@ -85,7 +85,15 @@ const EditSubscriptionModal = ({ sub, onClose }) => {
 
             <div className="form-group">
               <label htmlFor="nextBillingDate">Next Billing Date</label>
-              <input type="date" id="nextBillingDate" name="nextBillingDate" value={formData.nextBillingDate} onChange={handleChange} required />
+              <input 
+                type="date" 
+                id="nextBillingDate" 
+                name="nextBillingDate" 
+                value={formData.nextBillingDate} 
+                onChange={handleChange} 
+                min={new Date().toISOString().split('T')[0]}
+                required 
+              />
             </div>
           </div>
 

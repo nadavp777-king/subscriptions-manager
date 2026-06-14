@@ -23,12 +23,46 @@ export const SubscriptionProvider = ({ children }) => {
           console.error('Error fetching subscriptions:', error);
           setSubscriptions([]);
         } else {
-          const mappedData = data.map(row => ({
-            ...row,
-            price: row.amount,
-            billingCycle: row.billing_cycle,
-            nextBillingDate: row.next_billing_date
-          }));
+          const mappedData = data.map(row => {
+            let nextBillingDate = row.next_billing_date;
+            if (nextBillingDate) {
+              let dateObj = new Date(nextBillingDate);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0); // normalize to midnight
+              let changed = false;
+
+              // advance until the date is no longer in the past
+              while (dateObj < today) {
+                changed = true;
+                if (row.billing_cycle === 'yearly') {
+                  dateObj.setFullYear(dateObj.getFullYear() + 1);
+                } else {
+                  dateObj.setMonth(dateObj.getMonth() + 1);
+                }
+              }
+
+              if (changed) {
+                // toISOString might shift days due to timezone, so use local format
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                nextBillingDate = `${year}-${month}-${day}`;
+                
+                // Silently update database
+                supabase.from('subscriptions')
+                  .update({ next_billing_date: nextBillingDate })
+                  .eq('id', row.id)
+                  .then(({error}) => { if (error) console.error("Auto-renew failed:", error); });
+              }
+            }
+
+            return {
+              ...row,
+              price: row.amount,
+              billingCycle: row.billing_cycle,
+              nextBillingDate: nextBillingDate
+            };
+          });
           setSubscriptions(mappedData || []);
         }
       } else {
