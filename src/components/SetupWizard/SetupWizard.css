@@ -187,6 +187,13 @@
   gap: var(--spacing-md);
 }
 
+@media (max-width: 600px) {
+  .custom-sub-form .form-group-row {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+}
+
 .custom-sub-form .form-group-row .form-group {
   flex: 1;
 }
