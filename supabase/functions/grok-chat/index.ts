@@ -17,7 +17,7 @@ serve(async (req) => {
 
     let finalModel = model;
     if (model === 'grok-beta' || !model) {
-      finalModel = 'llama3-8b-8192'; // fallback for groq
+      finalModel = 'llama-3.3-70b-versatile'; // fallback for groq
     }
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {

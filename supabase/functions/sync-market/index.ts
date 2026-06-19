@@ -35,14 +35,15 @@ serve(async (req) => {
             content: "Provide prices for: netflix, spotify, apple music, youtube premium, disney+, hulu, amazon prime, playstation plus, xbox game pass, chatgpt plus."
           }
         ],
-        model: 'llama3-8b-8192',
+        model: 'llama-3.3-70b-versatile',
         stream: false,
         temperature: 0.1
       }),
     });
 
     if (!grokResponse.ok) {
-      throw new Error(`Grok API returned ${grokResponse.status}`);
+      const err = await grokResponse.text();
+      throw new Error(`Grok API returned ${grokResponse.status}: ${err}`);
     }
 
     const data = await grokResponse.json();
