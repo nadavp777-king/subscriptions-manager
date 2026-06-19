@@ -26,6 +26,12 @@ const DashboardPage = () => {
 
   useEffect(() => {
     const loadMarketData = async () => {
+      try {
+        // Trigger background market sync to update Supabase prices
+        await supabase.functions.invoke('sync-market');
+      } catch (e) {
+        console.error("Market sync failed", e);
+      }
       const data = await fetchMarketPrices();
       setMarketData(data);
       setLoadingMarket(false);
