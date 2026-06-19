@@ -44,6 +44,16 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
     try {
       const subsToSave = [];
       
+      const getNextBillingDate = (cycle) => {
+        const date = new Date();
+        if (cycle === 'Yearly') {
+          date.setFullYear(date.getFullYear() + 1);
+        } else {
+          date.setMonth(date.getMonth() + 1);
+        }
+        return date.toISOString();
+      };
+
       // Collect selected popular subs
       selectedSubs.forEach(id => {
         const sub = POPULAR_SUBSCRIPTIONS.find(s => s.id === id);
@@ -53,7 +63,7 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
             price: sub.price,
             billingCycle: sub.billingCycle,
             category: sub.category,
-            nextBillingDate: new Date().toISOString() // Placeholder for next billing date
+            nextBillingDate: getNextBillingDate(sub.billingCycle)
           });
         }
       });
@@ -65,7 +75,7 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
           price: parseFloat(customPrice),
           billingCycle: customCycle,
           category: customCategory,
-          nextBillingDate: customNextBillingDate || new Date().toISOString()
+          nextBillingDate: customNextBillingDate || getNextBillingDate(customCycle)
         });
       }
 
