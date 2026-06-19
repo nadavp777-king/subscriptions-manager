@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSubscriptions } from '../../lib/SubscriptionContext';
+import { useAuth } from '../../lib/AuthContext';
 import './SetupWizard.css';
 
 const POPULAR_SUBSCRIPTIONS = [
@@ -16,6 +17,7 @@ const POPULAR_SUBSCRIPTIONS = [
 
 const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
   const { addMultipleSubscriptions, addSubscription } = useSubscriptions();
+  const { logout } = useAuth();
   const [selectedSubs, setSelectedSubs] = useState(new Set());
   const [isAddingCustom, setIsAddingCustom] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -92,12 +94,26 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      setLoading(true);
+      await logout();
+    } catch (error) {
+      console.error("Failed to logout:", error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="setup-wizard-overlay">
       <div className="setup-wizard-modal">
-        {isAddMode && (
-          <button className="text-btn" onClick={handleSkipOrCancel} style={{ position: 'absolute', top: '16px', right: '16px', padding: '4px' }}>
+        {isAddMode ? (
+          <button className="text-btn" onClick={handleSkipOrCancel} style={{ position: 'absolute', top: '16px', right: '16px', padding: '4px', zIndex: 10 }}>
             <span className="material-symbols-outlined">close</span>
+          </button>
+        ) : (
+          <button className="text-btn" onClick={handleLogout} style={{ position: 'absolute', top: '16px', right: '16px', padding: '4px', color: 'var(--color-secondary)', zIndex: 10 }} title="Sign out">
+            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>logout</span>
           </button>
         )}
         <div className="wizard-header">
@@ -181,6 +197,7 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
                       <option value="Yearly">Yearly</option>
                     </select>
                   </div>
+                </div>
                 <div className="form-group-row mt-sm">
                   <div className="form-group">
                     <label>First Billing Date</label>

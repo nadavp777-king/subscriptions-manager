@@ -1,45 +1,26 @@
+import { supabase } from './supabase';
+
 /**
- * Utility function to call the Grok (xAI) API.
- * 
- * NOTE: Calling the API directly from the frontend exposes your API key. 
- * For a production app, you should route this request through a backend server.
- * 
- * To use this, add your API key to .env.local:
- * VITE_GROK_API_KEY=your_api_key_here
+ * Utility function to call the Grok (xAI) API securely via Supabase Edge Functions.
  */
 
-const GROK_API_URL = 'https://api.x.ai/v1/chat/completions';
-
 export async function fetchGrokChatCompletion(messages, model = 'grok-beta') {
-  const apiKey = import.meta.env.VITE_GROK_API_KEY;
-
-  if (!apiKey) {
-    throw new Error('VITE_GROK_API_KEY is missing from environment variables.');
-  }
-
   try {
-    const response = await fetch(GROK_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        messages,
-        model,
-        stream: false
-      }),
+    const { data, error } = await supabase.functions.invoke('grok-chat', {
+      body: { messages, model },
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(`Grok API Error: ${errorData.error?.message || response.statusText}`);
+    if (error) {
+      throw new Error(`Edge Function Error: ${error.message}`);
+    }
+    
+    if (data && data.error) {
+      throw new Error(`Grok API Error: ${data.error}`);
     }
 
-    const data = await response.json();
     return data.choices[0].message.content;
   } catch (error) {
-    console.error('Error calling Grok API:', error);
+    console.error('Error calling Grok Edge Function:', error);
     throw error;
   }
 }
