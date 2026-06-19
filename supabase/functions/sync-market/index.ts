@@ -17,8 +17,8 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? ''
     );
 
-    // Call Grok AI as a financial oracle to fetch real-world prices
-    const grokResponse = await fetch('https://api.x.ai/v1/chat/completions', {
+    // Call Groq AI as a financial oracle to fetch real-world prices
+    const grokResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ serve(async (req) => {
             content: "Provide prices for: netflix, spotify, apple music, youtube premium, disney+, hulu, amazon prime, playstation plus, xbox game pass, chatgpt plus."
           }
         ],
-        model: 'grok-beta',
+        model: 'llama3-8b-8192',
         stream: false,
         temperature: 0.1
       }),

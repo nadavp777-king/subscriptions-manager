@@ -15,7 +15,12 @@ serve(async (req) => {
       throw new Error('GROK_API_KEY is not configured in Supabase secrets')
     }
 
-    const response = await fetch('https://api.x.ai/v1/chat/completions', {
+    let finalModel = model;
+    if (model === 'grok-beta' || !model) {
+      finalModel = 'llama3-8b-8192'; // fallback for groq
+    }
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +28,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         messages,
-        model,
+        model: finalModel,
         stream: false
       }),
     })
