@@ -16,7 +16,7 @@ const POPULAR_SUBSCRIPTIONS = [
 ];
 
 const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
-  const { addMultipleSubscriptions, addSubscription } = useSubscriptions();
+  const { addMultipleSubscriptions, addSubscription, subscriptions = [] } = useSubscriptions();
   const { logout } = useAuth();
   const [selectedSubs, setSelectedSubs] = useState(new Set());
   const [isAddingCustom, setIsAddingCustom] = useState(false);
@@ -137,12 +137,15 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
         <div className="wizard-content">
           <div className="popular-subs-grid">
             {POPULAR_SUBSCRIPTIONS.map(sub => {
+              const alreadyHas = isAddMode && subscriptions.some(s => s.name.toLowerCase() === sub.name.toLowerCase());
               const isSelected = selectedSubs.has(sub.id);
               return (
                 <div 
                   key={sub.id} 
                   className={`popular-sub-card ${isSelected ? 'selected' : ''}`}
-                  onClick={() => toggleSubscription(sub)}
+                  onClick={() => !alreadyHas && toggleSubscription(sub)}
+                  style={alreadyHas ? { opacity: 0.5, cursor: 'not-allowed', backgroundColor: 'var(--color-bg-secondary)' } : {}}
+                  title={alreadyHas ? 'Already added' : ''}
                 >
                   <div className="sub-logo-wrapper">
                     <img src={`https://www.google.com/s2/favicons?domain=${sub.domain}&sz=128`} alt={sub.name} onError={(e) => {
@@ -158,8 +161,8 @@ const SetupWizard = ({ onComplete, isAddMode, onClose }) => {
                     <p>${sub.price}/mo</p>
                   </div>
                   <div className="selection-indicator">
-                    <span className="material-symbols-outlined">
-                      {isSelected ? 'check_circle' : 'radio_button_unchecked'}
+                    <span className="material-symbols-outlined" style={alreadyHas ? { color: 'var(--color-text-secondary)' } : {}}>
+                      {alreadyHas ? 'task_alt' : (isSelected ? 'check_circle' : 'radio_button_unchecked')}
                     </span>
                   </div>
                 </div>
