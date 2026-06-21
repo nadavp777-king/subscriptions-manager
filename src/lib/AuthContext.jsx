@@ -8,11 +8,26 @@ export const AuthProvider = ({ children }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId) => {
+  const fetchProfile = async (userId, userMetadata = {}) => {
     const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).single();
     if (data) {
       setProfile(data);
-    } else if (error) {
+    } else if (error && error.code === 'PGRST116') {
+      // Profile doesn't exist (PGRST116 = no rows returned). This happens often with Google Login.
+      // We create the profile here so foreign key constraints on subscriptions don't fail.
+      const fallbackName = userMetadata?.full_name || userMetadata?.name || 'User';
+      const { data: newProfile, error: insertError } = await supabase
+        .from('profiles')
+        .insert([{ id: userId, full_name: fallbackName }])
+        .select()
+        .single();
+        
+      if (newProfile) {
+        setProfile(newProfile);
+      } else if (insertError) {
+        console.error('Error creating profile:', insertError);
+      }
+    } else {
       console.error('Error fetching profile:', error);
     }
   };
@@ -21,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     // Check active sessions and sets the user
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (session?.user) fetchProfile(session.user.id);
+      if (session?.user) fetchProfile(session.user.id, session.user.user_metadata);
       setLoading(false);
     });
 
@@ -29,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        fetchProfile(session.user.id);
+        fetchProfile(session.user.id, session.user.user_metadata);
       } else {
         setProfile(null);
       }
